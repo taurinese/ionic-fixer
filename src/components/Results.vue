@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <ion-card class="ion-text-center" v-if="rate">
+    <div v-if="rate">
+        <ion-card class="ion-text-center">
             <ion-card-header>
                 <ion-card-subtitle>{{ search.money}} EUR = </ion-card-subtitle>
                 <ion-card-title>{{ convertedMoney }} {{ search.devise }}</ion-card-title>
@@ -10,7 +10,7 @@
 </template>
 
 <script>
-    import { IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle } from '@ionic/vue';
+    import { IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, toastController } from '@ionic/vue';
 
     export default {
         name: "Results",
@@ -30,6 +30,19 @@
                     this.convertedMoney = this.search.money * this.rate;
                     this.convertedMoney = Math.round(this.convertedMoney * 100) / 100;
                 })
+                .catch(err => {
+                    this.openToast(err);
+                })
+            },
+            async openToast(msg) {
+                const toast = await toastController
+                    .create({
+                    message: msg,
+                    duration: 2000,
+                    color: 'danger',
+                    cssClass: 'ion-text-center'
+                    })
+                return toast.present();
             }
         },
         mounted() {
