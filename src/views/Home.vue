@@ -1,38 +1,56 @@
 <template>
   <ion-page>
-    <ion-header :translucent="true">
+    <ion-header collapse="condense">
       <ion-toolbar>
-        <ion-title>Blank</ion-title>
+        <ion-title size="large" class="ion-text-center">ionic-fixer</ion-title>
       </ion-toolbar>
     </ion-header>
-    
     <ion-content :fullscreen="true">
-      <ion-header collapse="condense">
-        <ion-toolbar>
-          <ion-title size="large">Blank</ion-title>
-        </ion-toolbar>
-      </ion-header>
-    
-      <div id="container">
-        <strong>Ready to create an app?</strong>
-        <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-      </div>
+      <ion-grid>
+        <ion-row class="ion-align-items-center">
+          <ion-col>
+            <Search @convert="getData"></Search>
+            <Results v-if="search.money" :search="search"></Results>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </ion-content>
   </ion-page>
 </template>
 
-<script lang="ts">
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
-import { defineComponent } from 'vue';
+<script>
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonGrid, IonRow, IonCol } from '@ionic/vue';
+import Search from "@/components/Search.vue";
+import Results from "@/components/Results.vue";
 
-export default defineComponent({
+export default({
   name: 'Home',
   components: {
     IonContent,
     IonHeader,
     IonPage,
     IonTitle,
-    IonToolbar
+    IonToolbar,
+    Search,
+    Results,
+    IonGrid,
+    IonRow,
+    IonCol
+  },
+  methods: {
+    getData(options){
+      console.log(options);
+      this.search.money = options.money;
+      this.search.devise = options.devise;
+    }
+  },
+  data(){
+    return {
+      search: {
+        money: false,
+        devise:false
+      }
+    }
   }
 });
 </script>
@@ -65,4 +83,24 @@ export default defineComponent({
 #container a {
   text-decoration: none;
 }
+
+ion-content {
+  --offset-bottom: auto!important;
+  --overflow: hidden;
+  overflow: auto;
+}
+
+ion-content::-webkit-scrollbar {
+    display: none;
+}
+
+ion-row {
+  height:90vh;
+
+}
+
+ion-header{
+  height: 5vh;
+}
+
 </style>
