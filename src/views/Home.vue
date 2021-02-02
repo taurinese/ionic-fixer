@@ -39,7 +39,6 @@ export default({
   },
   methods: {
     getData(options){
-      console.log(options);
       this.search.money = options.money;
       this.search.devise = options.devise;
     }

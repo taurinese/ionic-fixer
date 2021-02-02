@@ -55,7 +55,6 @@
             fetch(`http://data.fixer.io/api/symbols?access_key=${process.env.VUE_APP_KEY_API}`)
             .then(res => res.json())
             .then(json => {
-                console.log(json);
                 this.devises = json.symbols;
                 })
         }
